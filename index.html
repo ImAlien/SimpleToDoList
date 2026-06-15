@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7f4" />
+    <title>今日清单</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="pipeline-panel">
+        <div class="brand">
+          <span class="brand-mark">✓</span>
+          <span>简单做</span>
+        </div>
+
+        <div class="pipeline">
+          <button class="pipeline-step active" data-view="pending">
+            <span class="step-dot"></span>
+            <span class="step-copy">
+              <small>进行中</small>
+              <strong>将要做的</strong>
+            </span>
+            <b id="pendingCount">0</b>
+          </button>
+          <button class="pipeline-step" data-view="completed">
+            <span class="step-dot"></span>
+            <span class="step-copy">
+              <small>已归档</small>
+              <strong>已经完成</strong>
+            </span>
+            <b id="completedCount">0</b>
+          </button>
+          <button class="pipeline-step" data-view="calendar">
+            <span class="step-dot"></span>
+            <span class="step-copy">
+              <small>按日期查看</small>
+              <strong>日历</strong>
+            </span>
+            <b id="calendarCount">0</b>
+          </button>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-label">
+            <span>今日进度</span>
+            <strong id="progressText">0%</strong>
+          </div>
+          <div class="progress-track"><i id="progressBar"></i></div>
+          <small id="progressHint">从一件小事开始</small>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="page-header">
+          <div>
+            <p id="todayLabel"></p>
+            <h1 id="pageTitle">将要做的</h1>
+          </div>
+          <div class="header-actions">
+            <button id="clearCompleted" class="text-button hidden">清空已完成</button>
+            <div class="font-settings">
+              <button id="fontSettingsButton" class="font-settings-button" type="button" aria-label="调整界面字号" aria-expanded="false">
+                <span>Aa</span>
+              </button>
+              <div id="fontSettingsMenu" class="font-settings-menu hidden">
+                <span>界面字号</span>
+                <div class="font-size-options">
+                  <button type="button" data-font-size="small">小</button>
+                  <button type="button" data-font-size="standard">标准</button>
+                  <button type="button" data-font-size="large">大</button>
+                  <button type="button" data-font-size="xlarge">特大</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div id="listView">
+          <section class="composer-wrap">
+            <form id="quickAddForm" class="composer">
+              <input id="taskInput" type="text" maxlength="80" autocomplete="off" placeholder="接下来要做什么？" aria-label="输入新任务" />
+              <input id="taskDate" type="date" aria-label="任务日期" />
+              <button type="submit">添加</button>
+            </form>
+            <p>选择计划日期，按回车快速添加</p>
+          </section>
+
+          <section class="task-section">
+            <div class="section-heading">
+              <span id="listCaption">待办事项</span>
+              <span id="taskSummary"></span>
+            </div>
+            <div id="taskList" class="task-list"></div>
+          </section>
+        </div>
+
+        <section id="calendarView" class="calendar-view hidden">
+          <div class="calendar-card">
+            <div class="calendar-toolbar">
+              <button id="prevMonth" type="button" aria-label="上个月">‹</button>
+              <strong id="calendarMonth"></strong>
+              <button id="nextMonth" type="button" aria-label="下个月">›</button>
+            </div>
+            <div class="calendar-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+            <div id="calendarGrid" class="calendar-grid"></div>
+          </div>
+          <div class="calendar-selection-heading">
+            <strong id="selectedDateTitle"></strong>
+            <span id="selectedDateCount"></span>
+          </div>
+          <div id="calendarTaskList" class="task-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
