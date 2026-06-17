@@ -87,15 +87,18 @@ function render() {
   const pending = tasks.filter((task) => !task.done);
   const completed = tasks.filter((task) => task.done);
   const visibleTasks = activeView === "pending" ? pending : activeView === "completed" ? completed : [];
-  const total = tasks.length;
-  const progress = total ? Math.round((completed.length / total) * 100) : 0;
+  const todaysTasks = tasks.filter((task) => task.date === todayKey);
+  const todaysCompleted = todaysTasks.filter((task) => task.done);
+  const progress = todaysTasks.length ? Math.round((todaysCompleted.length / todaysTasks.length) * 100) : 0;
 
   $("#pendingCount").textContent = pending.length;
   $("#completedCount").textContent = completed.length;
   $("#calendarCount").textContent = tasks.filter((task) => task.date.startsWith(`${calendarDate.getFullYear()}-${String(calendarDate.getMonth() + 1).padStart(2, "0")}`)).length;
   $("#progressText").textContent = `${progress}%`;
   $("#progressBar").style.width = `${progress}%`;
-  $("#progressHint").textContent = progress === 100 && total ? "今天的任务都完成了" : `已完成 ${completed.length} / ${total}`;
+  $("#progressHint").textContent = todaysTasks.length
+    ? progress === 100 ? "今天的任务都完成了" : `今日已完成 ${todaysCompleted.length} / ${todaysTasks.length}`
+    : "今天还没有任务";
   $("#pageTitle").textContent = activeView === "pending" ? "将要做的" : activeView === "completed" ? "已经完成" : "日历";
   $("#listCaption").textContent = activeView === "pending" ? "待办事项" : "完成记录";
   $("#taskSummary").textContent = `${visibleTasks.length} 项`;
